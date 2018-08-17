@@ -31,7 +31,9 @@ public class SQSMessageConsumer {
             Session session = connection.createSession(false, Session.CLIENT_ACKNOWLEDGE);
             MessageConsumer consumer = session.createConsumer(session.createQueue(SQSConfiguration.getInstance().getQueueName()));
 
-            consumer.setMessageListener(SQSListener.class);
+            SQSListener listener = new SQSListener();
+            consumer.setMessageListener(listener);
+            connection.start();
         } catch (JMSException e) {
             e.printStackTrace();
         }
